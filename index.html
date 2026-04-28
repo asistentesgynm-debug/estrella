@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GYNM Control Panel - V11 Completa y Corregida</title>
+    <title>GYNM Control Panel - V13 Definitiva</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -129,7 +129,7 @@
 <nav>
     <div class="nav-logo">
         <img src="https://i.ibb.co/gMN23cT6/IMG-1285.png" alt="GYNM Logo">
-        <div style="font-size: 0.7rem; color: #aaa; margin-top: 8px;">V11: Completa y Corregida</div>
+        <div style="font-size: 0.7rem; color: #aaa; margin-top: 8px;">V13: Historial Completo</div>
     </div>
 
     <div class="nav-label">Atención Prioritaria</div>
@@ -153,7 +153,7 @@
         <div class="quick-box" onclick="copySimple('926935548')"><strong>YAPE/PLIN</strong>926 935 548</div>
     </div>
 
-    <input type="text" class="search-bar" id="search" placeholder="🔍 Escribe lo que buscas (ej: precio, virtual, seguimiento, diabetes)..." onkeyup="filter()">
+    <input type="text" class="search-bar" id="search" placeholder="🔍 Escribe lo que buscas (ej: precio, virtual, seguimiento, bbva, lipoliticos)..." onkeyup="filter()">
 
     <div id="paso0" class="content-section" style="display:none;">
         <div class="info-card">
@@ -282,6 +282,26 @@ Cuéntame, ¿qué día de esta semana te viene mejor y si prefieres horario de m
             </div>
             <div class="hidden-keywords">agendar breña pedir dia horario cuando disponibilidad</div>
         </div>
+        
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">2. Dar Opciones de Horario</span>
+            <div class="text-preview">Te comento cuento con disponibilidad para el dia :
+[Día y Fecha] a las [Hora 1] / [Hora 2] / [Hora 3]
+
+Que horario te resulta mejor ?</div>
+            <div class="hidden-keywords">dar opciones de horario disponibilidad horas libre cita agendar</div>
+        </div>
+
+        <div class="copy-card card-si" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--info);">San Isidro (S/ 50) - Dra o Evaluación Profunda</span>
+            <div class="text-preview">¡Genial! ✨ En nuestra sede de San Isidro la consulta diagnóstica presencial tiene un costo de S/ 50. En esta sesión evaluaremos tu caso, tus objetivos y diseñaremos tu plan integral de alto impacto. 💚
+
+📍 Av. Paseo de la República 3691.
+¿Te gustaría que busquemos un horario disponible para ti?
+
+*(Nota: La consulta directa con la Dra. Estrella tiene un costo de S/ 50 y está sujeta a la disponibilidad de su calendario).*</div>
+            <div class="hidden-keywords">san isidro 50 soles presencial lima cara</div>
+        </div>
 
         <div class="copy-card card-si" onclick="copyCard(this)">
             <span class="card-title" style="color: var(--info);">San Isidro (S/ 20) - Equipo Especialistas <span class="var-badge">Versión 1/2</span></span>
@@ -300,6 +320,28 @@ En esta primera cita revisaremos tu composición corporal y metabolismo para dis
 ¿Para qué día te gustaría que busquemos un espacio en la agenda?</div>
             </div>
             <div class="hidden-keywords">san isidro 20 soles presencial lima barata equipo</div>
+        </div>
+
+        <div class="copy-card card-br" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--brena);">Breña (S/ 50) - Dra o Evaluación Profunda</span>
+            <div class="text-preview">¡Excelente! 😊 En nuestra sede de Breña la consulta diagnóstica presencial tiene un costo de S/ 50. En esta sesión se evaluará a profundidad tu caso para diseñar tu plan de alto impacto. 💚
+
+📍 Av. Venezuela 625.
+¿Te gustaría que busquemos un horario disponible para ti?
+
+*(Nota: La consulta directa con la Dra. Estrella tiene un costo de S/ 50 y está sujeta a la disponibilidad de su calendario).*</div>
+            <div class="hidden-keywords">breña brena 50 soles presencial lima cara</div>
+        </div>
+
+        <div class="copy-card card-br" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--brena);">Breña (S/ 20) - Equipo Especialistas</span>
+            <div class="text-preview">¡Excelente! 😊 En nuestra sede de Breña contamos con nuestro equipo de especialistas para tu consulta diagnóstica presencial, la cual tiene un costo de S/ 20. 
+
+En la cita evaluarán tus medidas y hábitos para iniciar tu programa. 🥗✨
+
+📍 Av. Venezuela 625.
+¿Qué día se te acomoda mejor para visitarnos?</div>
+            <div class="hidden-keywords">breña brena 20 soles presencial lima barata equipo</div>
         </div>
 
         <div class="copy-card card-prov" onclick="copyCard(this)">
@@ -355,6 +397,12 @@ Lo logramos combinando nutrición inteligente y nuestros Lipolíticos reductores
             </div>
             <div class="hidden-keywords">proyeccion kilos bajar tiempo resultados cuanto bajo rebote foto proyeccion</div>
         </div>
+
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">Objetivo: Masa Muscular / Gym</span>
+            <div class="text-preview">¡Claro que sí! 💪 También diseñamos programas de hipertrofia y aumento de masa muscular. En tu Consulta Diagnóstica, la especialista evaluará tu composición corporal actual para armarte un plan de alimentación hipercalórico y las pautas exactas para tu objetivo. ¿Agendamos tu evaluación?</div>
+            <div class="hidden-keywords">masa muscular hipertrofia gym deporte subir peso flaco</div>
+        </div>
         
         <div class="copy-card card-general" onclick="copyCard(this)">
             <span class="card-title">FAQ: Diferencia entre consulta 20 y 50 <span class="var-badge">Versión 1/2</span></span>
@@ -364,9 +412,31 @@ Lo logramos combinando nutrición inteligente y nuestros Lipolíticos reductores
             </div>
             <div class="hidden-keywords">diferencia sedes costo doctora equipo porque 50 20 dudas</div>
         </div>
+
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">FAQ: Qué son y cuánto cuestan los Lipolíticos</span>
+            <div class="text-preview">¡Excelente pregunta! ✨ Nuestros **Lipolíticos Reductores** son un tratamiento que ayuda a quemar grasa localizada de forma efectiva. 
+
+Ten en cuenta que estos están incluidos únicamente en nuestros **Planes Full y Premium A**. El resto de planes se enfocan en la nutrición integral. 💚 
+
+El precio exacto depende de lo que la doctora determine en tu cita diagnóstica. Nuestros planes base inician en S/ 277.</div>
+            <div class="hidden-keywords">precio full premium costos tratamiento lipoliticos inyecciones grasa dudas</div>
+        </div>
     </div>
 
     <div id="paso4" class="content-section" style="display:none;">
+        
+        <div class="copy-card card-price" style="border-left-color: #c2185b;" onclick="copyCard(this)">
+            <div class="img-alert promo-alert">🎁 PROMOCIÓN ACTIVA: ADJUNTA FOTO "DÍA DEL TRABAJADOR 10% DSCTO"</div>
+            <span class="card-title" style="color: #c2185b;">Promo Día del Trabajador (Para Plan Full)</span>
+            <div class="text-preview">¡Hola! Quería contarte que por el Día del Trabajador tenemos una campaña especial. 👷‍♀️👷‍♂️ 
+
+Porque tu cuerpo es tu herramienta de trabajo más importante, tienes un **10% DE DESCUENTO exclusivo en nuestros Planes Full**. 👇
+
+¿Te gustaría aprovechar este descuento y agendar tu evaluación?</div>
+            <div class="hidden-keywords">promocion campaña descuento trabajador dia 10% dscto promo oferta foto lente mandil</div>
+        </div>
+
         <div class="copy-card card-price" onclick="copyCard(this)">
             <div class="img-alert">📸 ADJUNTA FOTO: "TU PLAN DE CAMBIO" (Tabla comparativa de los 3 planes)</div>
             <span class="card-title" style="color: var(--price);">Resumen General (Si el cliente está indeciso)</span>
@@ -408,6 +478,56 @@ Nuestro plan más popular para acelerar la pérdida de grasa.
 • 4 semanas: S/ 497 | 8 semanas: S/ 897 | 12 semanas: S/ 1257</div>
             <div class="hidden-keywords">plan full precio costo presencial lipoliticos inyecciones medio grasa fucsia foto</div>
         </div>
+
+        <div class="copy-card card-price" onclick="copyCard(this)">
+            <div class="img-alert" style="color: #c2185b; border-color: #f48fb1; background: #fce4ec;">📸 ADJUNTA FOTO: CUADRO FUCSIA CLARO "PLAN PREMIUM A"</div>
+            <span class="card-title" style="color: var(--price);">Plan Premium A (Presencial Completo)</span>
+            <div class="text-preview">📌 *PLAN PREMIUM A (Presencial)*
+El programa de transformación total.
+
+*Incluye:* 📋🍏👂💉🧠🏃‍♀️
+✅ Consulta semanal y Plan personalizado
+✅ Auriculoterapia / Psiconutrición
+✅ Lipolíticos reductores
+✅ Rutinas de ejercicios
+
+💰 *Inversión:*
+• 4 semanas: S/ 587 | 8 semanas: S/ 1057 | 12 semanas: S/ 1467</div>
+            <div class="hidden-keywords">plan premium A precio costo presencial completo ejercicios rutina caro inyecciones foto</div>
+        </div>
+
+        <div class="copy-card card-price" onclick="copyCard(this)">
+            <div class="img-alert" style="color: #c2185b; border-color: #f48fb1; background: #fce4ec;">📸 ADJUNTA FOTO: CUADRO FUCSIA "PLAN PREMIUM B"</div>
+            <span class="card-title" style="color: var(--price);">Plan Premium B (Presencial/Virtual)</span>
+            <div class="text-preview">📌 *PLAN PREMIUM B (Presencial o Virtual)*
+Abordaje integral, equilibrando mente y cuerpo.
+
+*Incluye:* 📋🍏👂🧠🏃‍♀️
+✅ Consulta semanal y Plan personalizado
+✅ Auriculoterapia o Consultas psiconutrición
+✅ Rutinas de ejercicio
+
+💰 *Inversión:*
+• 4 semanas: S/ 497 | 8 semanas: S/ 897 | 12 semanas: S/ 1257</div>
+            <div class="hidden-keywords">plan premium b precio costo presencial virtual ejercicios rutina psiconutricion mente sin agujas foto</div>
+        </div>
+
+        <div class="copy-card card-prov" onclick="copyCard(this)">
+            <div class="img-alert" style="color: #388e3c; border-color: #81c784; background: #e8f5e9;">📸 ADJUNTA FOTO: CUADRO VERDE "PLAN VIRTUAL"</div>
+            <span class="card-title" style="color: var(--provincia);">Plan Virtual (Provincias u Online)</span>
+            <div class="text-preview">📌 *PLAN VIRTUAL*
+Logra tu meta desde cualquier lugar del país. 💻🇵🇪
+
+*Incluye:* 📋🍏🧠🏃‍♀️
+✅ Consulta nutricional por videollamada
+✅ Plan de alimentación personalizado
+✅ Consultas de psiconutrición
+✅ Rutinas adaptadas a casa
+
+💰 *Inversión:*
+• 4 semanas: S/ 277 | 8 semanas: S/ 497 | 12 semanas: S/ 647</div>
+            <div class="hidden-keywords">plan virtual precio costo online distancia provincia videollamada pc laptop internet verde foto</div>
+        </div>
     </div>
 
     <div id="paso5" class="content-section" style="display:none;">
@@ -439,6 +559,47 @@ CCI: 00219100990039801854
 A nombre de: Gordito ya no más Centro de nutricion y adelgazamiento
 RUC: 20610035656</div>
             <div class="hidden-keywords">bcp yape plin cuentas transferencias pagos ruc deposito principal</div>
+        </div>
+
+        <div class="copy-card card-bank" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--bank);">Cuentas BBVA e Interbank</span>
+            <div class="text-preview">🏦 *BBVA*
+Cuenta Independencia: 0011-0110-0200461973
+CCI: 011-110-000200461973-46
+A nombre de: Estrella Andreina Chacon Moreno
+
+🏦 *INTERBANK*
+Cuenta Simple en soles: 0243126149524
+A nombre de: Estrella Andreina Chacon Moreno
+RUC: 15603729878
+
+*(Nota: No aceptamos transferencias de Scotiabank por el momento).*</div>
+            <div class="hidden-keywords">bbva interbank cuentas alternativas pagos transferencias secundario continental</div>
+        </div>
+        
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">Links de GPS e Instagram</span>
+            <div class="text-preview">📍 *UBICACIONES GPS:*
+Sede Breña: https://acortar.link/ZPIK11
+Sede San Isidro: https://maps.app.goo.gl/1g9tJK4x7E9QsXpB9
+
+📸 *TESTIMONIOS REALES (Instagram):*
+¿Te gustaría ver cómo otras personas lograron su cambio? Mira sus historias de éxito aquí:
+👉 https://www.instagram.com/gorditoyanomas?igsh=Y3JucWU4bHl4czZ4</div>
+            <div class="hidden-keywords">ubicacion sede breña san isidro gps direccion mapa instagram testimonios fotos redes llegar ruta waze</div>
+        </div>
+
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">Plantilla Confirmación de Cita</span>
+            <div class="text-preview">¡Excelente! 😊💚 Acabo de programar tu cita diagnóstica con nuestro equipo clínico.
+                
+📆 Día: *[Ingresar Día]*
+🕒 Hora: *[Ingresar Hora AM/PM]*
+📌 Dirección: *[Ingresar Dirección de la Sede]*
+💻 Modalidad: *[Presencial o Virtual]*
+
+Cualquier duda que tengas me puedes comunicar.✨</div>
+            <div class="hidden-keywords">confirmacion agenda cita programacion mensaje plantilla confirmar agendado listo</div>
         </div>
     </div>
 
