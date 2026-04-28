@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GYNM Control Panel - V13 Definitiva</title>
+    <title>GYNM Control Panel - V12 Completa y Restaurada</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -129,7 +129,7 @@
 <nav>
     <div class="nav-logo">
         <img src="https://i.ibb.co/gMN23cT6/IMG-1285.png" alt="GYNM Logo">
-        <div style="font-size: 0.7rem; color: #aaa; margin-top: 8px;">V13: Historial Completo</div>
+        <div style="font-size: 0.7rem; color: #aaa; margin-top: 8px;">V12: Completa y Restaurada</div>
     </div>
 
     <div class="nav-label">Atención Prioritaria</div>
@@ -153,7 +153,7 @@
         <div class="quick-box" onclick="copySimple('926935548')"><strong>YAPE/PLIN</strong>926 935 548</div>
     </div>
 
-    <input type="text" class="search-bar" id="search" placeholder="🔍 Escribe lo que buscas (ej: precio, virtual, seguimiento, bbva, lipoliticos)..." onkeyup="filter()">
+    <input type="text" class="search-bar" id="search" placeholder="🔍 Escribe lo que buscas (ej: precio, virtual, seguimiento, bbva)..." onkeyup="filter()">
 
     <div id="paso0" class="content-section" style="display:none;">
         <div class="info-card">
@@ -252,15 +252,9 @@ Para poder derivarte correctamente, ayúdame con esto:
             <div class="img-alert">📸 ADJUNTA FOTO: "TU PLAN DE CAMBIO" (Tabla de los 3 planes)</div>
             <span class="card-title">2. Pitch Consulta S/20 y Elección <span class="var-badge">Versión 1/2</span></span>
             <div class="text-preview">
-<div class="var active">¡Perfecto! 😊
-👉 Primero empezamos con una consulta (s/20) donde vemos tu caso a detalle (cómo comes, horarios, rutina, etc.).
-💚 Trabajamos con programas personalizados de 4, 8 y 12 semanas.
-👉 Incluyen plan de alimentación, consultas y seguimiento para ayudarte con la ansiedad y mantener el orden.
-👉 La nutricionista te recomendará el plan más adecuado (básico, full o premium) según lo que necesites.
-💰 Los programas van desde S/277, según el nivel de acompañamiento.
-👉 Por eso primero realizamos la evaluación en la primera consulta.
+<div class="var active">1.  ¡Te entiendo perfectamente! 😊 Queremos que estés segura de tu inversión. Nuestros planes básicos (que incluyen tu plan nutricional y seguimiento semanal) inician desde los S/ 277. 💸
 
-¿En cuál de nuestras dos sedes te gustaría atenderte, Breña o San Isidro?</div>
+Sin embargo, como cada cuerpo es diferente, el primer paso es tu Consulta Diagnóstica de S/ 20. 🩺 Ahí la doctora evaluará si necesitas un plan Full o Premium para mejores resultados. ¿Te gustaría agendar una cita? 🗓️</div>
 <div class="var">¡Genial! 🌟 Te cuento cómo es nuestro proceso:
 👉 Todo inicia con una consulta de evaluación (s/20) para conocer tus hábitos, horarios y metabolismo a fondo.
 💚 Tras evaluarte, te sugeriremos programas de 4, 8 o 12 semanas (básico, full o premium).
@@ -282,26 +276,6 @@ Cuéntame, ¿qué día de esta semana te viene mejor y si prefieres horario de m
             </div>
             <div class="hidden-keywords">agendar breña pedir dia horario cuando disponibilidad</div>
         </div>
-        
-        <div class="copy-card card-general" onclick="copyCard(this)">
-            <span class="card-title">2. Dar Opciones de Horario</span>
-            <div class="text-preview">Te comento cuento con disponibilidad para el dia :
-[Día y Fecha] a las [Hora 1] / [Hora 2] / [Hora 3]
-
-Que horario te resulta mejor ?</div>
-            <div class="hidden-keywords">dar opciones de horario disponibilidad horas libre cita agendar</div>
-        </div>
-
-        <div class="copy-card card-si" onclick="copyCard(this)">
-            <span class="card-title" style="color: var(--info);">San Isidro (S/ 50) - Dra o Evaluación Profunda</span>
-            <div class="text-preview">¡Genial! ✨ En nuestra sede de San Isidro la consulta diagnóstica presencial tiene un costo de S/ 50. En esta sesión evaluaremos tu caso, tus objetivos y diseñaremos tu plan integral de alto impacto. 💚
-
-📍 Av. Paseo de la República 3691.
-¿Te gustaría que busquemos un horario disponible para ti?
-
-*(Nota: La consulta directa con la Dra. Estrella tiene un costo de S/ 50 y está sujeta a la disponibilidad de su calendario).*</div>
-            <div class="hidden-keywords">san isidro 50 soles presencial lima cara</div>
-        </div>
 
         <div class="copy-card card-si" onclick="copyCard(this)">
             <span class="card-title" style="color: var(--info);">San Isidro (S/ 20) - Equipo Especialistas <span class="var-badge">Versión 1/2</span></span>
@@ -320,28 +294,6 @@ En esta primera cita revisaremos tu composición corporal y metabolismo para dis
 ¿Para qué día te gustaría que busquemos un espacio en la agenda?</div>
             </div>
             <div class="hidden-keywords">san isidro 20 soles presencial lima barata equipo</div>
-        </div>
-
-        <div class="copy-card card-br" onclick="copyCard(this)">
-            <span class="card-title" style="color: var(--brena);">Breña (S/ 50) - Dra o Evaluación Profunda</span>
-            <div class="text-preview">¡Excelente! 😊 En nuestra sede de Breña la consulta diagnóstica presencial tiene un costo de S/ 50. En esta sesión se evaluará a profundidad tu caso para diseñar tu plan de alto impacto. 💚
-
-📍 Av. Venezuela 625.
-¿Te gustaría que busquemos un horario disponible para ti?
-
-*(Nota: La consulta directa con la Dra. Estrella tiene un costo de S/ 50 y está sujeta a la disponibilidad de su calendario).*</div>
-            <div class="hidden-keywords">breña brena 50 soles presencial lima cara</div>
-        </div>
-
-        <div class="copy-card card-br" onclick="copyCard(this)">
-            <span class="card-title" style="color: var(--brena);">Breña (S/ 20) - Equipo Especialistas</span>
-            <div class="text-preview">¡Excelente! 😊 En nuestra sede de Breña contamos con nuestro equipo de especialistas para tu consulta diagnóstica presencial, la cual tiene un costo de S/ 20. 
-
-En la cita evaluarán tus medidas y hábitos para iniciar tu programa. 🥗✨
-
-📍 Av. Venezuela 625.
-¿Qué día se te acomoda mejor para visitarnos?</div>
-            <div class="hidden-keywords">breña brena 20 soles presencial lima barata equipo</div>
         </div>
 
         <div class="copy-card card-prov" onclick="copyCard(this)">
@@ -397,12 +349,6 @@ Lo logramos combinando nutrición inteligente y nuestros Lipolíticos reductores
             </div>
             <div class="hidden-keywords">proyeccion kilos bajar tiempo resultados cuanto bajo rebote foto proyeccion</div>
         </div>
-
-        <div class="copy-card card-general" onclick="copyCard(this)">
-            <span class="card-title">Objetivo: Masa Muscular / Gym</span>
-            <div class="text-preview">¡Claro que sí! 💪 También diseñamos programas de hipertrofia y aumento de masa muscular. En tu Consulta Diagnóstica, la especialista evaluará tu composición corporal actual para armarte un plan de alimentación hipercalórico y las pautas exactas para tu objetivo. ¿Agendamos tu evaluación?</div>
-            <div class="hidden-keywords">masa muscular hipertrofia gym deporte subir peso flaco</div>
-        </div>
         
         <div class="copy-card card-general" onclick="copyCard(this)">
             <span class="card-title">FAQ: Diferencia entre consulta 20 y 50 <span class="var-badge">Versión 1/2</span></span>
@@ -411,16 +357,6 @@ Lo logramos combinando nutrición inteligente y nuestros Lipolíticos reductores
 <div class="var">Es muy sencillo: La cita de S/ 50 es una evaluación de mayor profundidad diseñada para abordar casos clínicos complejos o estancamientos metabólicos. La evaluación de S/ 20 la realiza nuestro equipo de expertas nutricionistas siguiendo el mismo método de la doctora. ¡En ambas estarás en excelentes manos! 💚</div>
             </div>
             <div class="hidden-keywords">diferencia sedes costo doctora equipo porque 50 20 dudas</div>
-        </div>
-
-        <div class="copy-card card-general" onclick="copyCard(this)">
-            <span class="card-title">FAQ: Qué son y cuánto cuestan los Lipolíticos</span>
-            <div class="text-preview">¡Excelente pregunta! ✨ Nuestros **Lipolíticos Reductores** son un tratamiento que ayuda a quemar grasa localizada de forma efectiva. 
-
-Ten en cuenta que estos están incluidos únicamente en nuestros **Planes Full y Premium A**. El resto de planes se enfocan en la nutrición integral. 💚 
-
-El precio exacto depende de lo que la doctora determine en tu cita diagnóstica. Nuestros planes base inician en S/ 277.</div>
-            <div class="hidden-keywords">precio full premium costos tratamiento lipoliticos inyecciones grasa dudas</div>
         </div>
     </div>
 
