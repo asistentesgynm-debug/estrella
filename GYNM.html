@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYNM Control Panel - V11 Completa y Corregida</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1b5e20;
+            --primary-light: #4c8c4a;
+            --accent: #d32f2f; 
+            --medical: #6a1b9a; 
+            --info: #0277bd; 
+            --brena: #e65100; 
+            --price: #00796b; 
+            --bank: #f57f17; 
+            --provincia: #c2185b; 
+            --white: #ffffff;
+            --bg: #f0f4f3;
+        }
+
+        * { box-sizing: border-box; font-family: 'Outfit', sans-serif; transition: 0.2s; }
+        body { background-color: var(--bg); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+
+        /* BARRA LATERAL */
+        nav {
+            width: 280px; background: #121212; color: white; padding: 20px;
+            display: flex; flex-direction: column; gap: 8px; overflow-y: auto;
+        }
+        .nav-logo { text-align: center; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        .nav-logo img { 
+            width: 90px; 
+            height: 90px; 
+            border-radius: 50%; 
+            background: white; 
+            padding: 5px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            object-fit: contain;
+        }
+        
+        .nav-step {
+            padding: 12px 15px; border-radius: 10px; cursor: pointer; font-size: 0.85rem;
+            border: 1px solid transparent; background: #1a1a1a;
+        }
+        .nav-step:hover { background: #333; }
+        .nav-step.active { background: var(--primary); font-weight: 600; border-color: var(--primary-light); }
+        .nav-step.crisis { border-color: var(--accent); color: #ff8a80; }
+        .nav-label { font-size: 0.7rem; text-transform: uppercase; color: #777; margin-top: 10px; letter-spacing: 1px; }
+
+        /* ÁREA PRINCIPAL */
+        main { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; }
+        
+        .top-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .quick-box {
+            background: white; padding: 12px; border-radius: 10px; font-size: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid #eee; text-align: center;
+        }
+        .quick-box:hover { border-color: var(--primary); background: #f1f8e9; }
+        .quick-box strong { display: block; color: var(--primary); font-size: 0.7rem; margin-bottom: 3px;}
+
+        .search-bar {
+            width: 100%; padding: 18px 25px; border-radius: 50px; border: 2px solid #ddd;
+            font-size: 1rem; outline: none; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .search-bar:focus { border-color: var(--primary); }
+
+        /* TARJETAS INTERACTIVAS */
+        .copy-card {
+            background: white; border-radius: 15px; padding: 20px; margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); cursor: pointer; position: relative;
+            border-left: 6px solid #ddd;
+        }
+        .copy-card:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .copy-card:active { transform: scale(0.98); }
+        
+        /* COLORES DE TARJETAS */
+        .card-crisis { border-left-color: var(--accent); background: #fff5f5; }
+        .card-med { border-left-color: var(--medical); background: #fdf5ff; }
+        .card-general { border-left-color: var(--primary); }
+        .card-si { border-left-color: var(--info); }
+        .card-br { border-left-color: var(--brena); }
+        .card-prov { border-left-color: var(--provincia); }
+        .card-price { border-left-color: var(--price); }
+        .card-bank { border-left-color: var(--bank); }
+
+        /* ALERTAS Y VARIACIONES */
+        .img-alert {
+            background: #e1f5fe; color: #0277bd; font-size: 0.75rem; padding: 8px 12px;
+            border-radius: 6px; font-weight: 800; margin-bottom: 12px; border: 1px dashed #29b6f6;
+            display: inline-block; pointer-events: none;
+        }
+        .promo-alert { background: #fce4ec; color: #c2185b; border-color: #f48fb1; }
+        
+        .var-badge {
+            float: right; font-size: 0.65rem; background: #e0e0e0; color: #555;
+            padding: 3px 8px; border-radius: 12px; font-weight: 600; text-transform: none;
+        }
+        .var { display: none; }
+        .var.active { display: block; }
+
+        .info-card {
+            background: #fffde7; border-radius: 15px; padding: 20px; margin-bottom: 15px;
+            border: 2px dashed #fbc02d; color: #554300; font-size: 0.9rem; line-height: 1.5;
+        }
+
+        .card-title { font-weight: 800; font-size: 0.9rem; margin-bottom: 8px; display: block; color: #333; text-transform: uppercase; }
+        .text-preview { font-size: 0.95rem; line-height: 1.6; color: #444; white-space: pre-wrap; }
+        .hidden-keywords { display: none; }
+
+        #toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #333; color: white; padding: 12px 30px; border-radius: 50px;
+            display: none; z-index: 1000; font-weight: 600; font-size: 0.9rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            nav { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 15px; }
+            .nav-step { white-space: nowrap; }
+            .top-bar { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="toast">Copiado al portapapeles ✅</div>
+
+<nav>
+    <div class="nav-logo">
+        <img src="https://i.ibb.co/gMN23cT6/IMG-1285.png" alt="GYNM Logo">
+        <div style="font-size: 0.7rem; color: #aaa; margin-top: 8px;">V11: Completa y Corregida</div>
+    </div>
+
+    <div class="nav-label">Atención Prioritaria</div>
+    <div class="nav-step crisis" onclick="showSection('crisis', this)">🆘 Emergencias / Tiempo</div>
+    <div class="nav-step" style="border-color: var(--medical); color: #e1bee7;" onclick="showSection('medico', this)">🩺 Dudas Médicas / SOP</div>
+
+    <div class="nav-label">Flujo de Venta</div>
+    <div class="nav-step" onclick="showSection('paso0', this)">📍 0. Reglas y Mapa</div>
+    <div class="nav-step active" onclick="showSection('paso1', this)">👋 1. Saludo y Filtros</div>
+    <div class="nav-step" onclick="showSection('paso2', this)">🏥 2. Sedes y Citas</div>
+    <div class="nav-step" onclick="showSection('paso3', this)">📈 3. Resultados y FAQ</div>
+    <div class="nav-step" onclick="showSection('paso4', this)">📋 4. Tarifarios (Planes)</div>
+    <div class="nav-step" onclick="showSection('paso5', this)">💳 5. Pagos y Enlaces</div>
+    <div class="nav-step" onclick="showSection('seguimiento', this)">🔄 6. Seguimiento / Leads</div>
+</nav>
+
+<main>
+    <div class="top-bar">
+        <div class="quick-box" onclick="copySimple('20610035656')"><strong>RUC EMPRESA</strong>20610035656</div>
+        <div class="quick-box" onclick="copySimple('aburmerni')"><strong>CLAVE SOL</strong>aburmerni</div>
+        <div class="quick-box" onclick="copySimple('926935548')"><strong>YAPE/PLIN</strong>926 935 548</div>
+    </div>
+
+    <input type="text" class="search-bar" id="search" placeholder="🔍 Escribe lo que buscas (ej: precio, virtual, seguimiento, diabetes)..." onkeyup="filter()">
+
+    <div id="paso0" class="content-section" style="display:none;">
+        <div class="info-card">
+            <strong>🕒 Horarios de Atención:</strong><br>
+            • <strong>Dra. Estrella (Breña):</strong> Martes y Jueves (Mañana).<br>
+            • <strong>Dra. Estrella (San Isidro):</strong> Martes y Jueves (Tarde).<br>
+            • <strong>Equipo Nutricionistas (San Isidro):</strong> Lunes a Sábado.<br>
+            • Otros días con la Dra.: Solo pacientes de control (agenda llena).
+        </div>
+        <div class="info-card" style="background: #e3f2fd; border-color: #64b5f6; color: #1565c0;">
+            <strong>📍 REGLA DE UBICACIÓN:</strong><br>
+            1️⃣ Si es de <strong>LIMA</strong> ➡️ Ofrecer presencial y preguntar si prefiere San Isidro o Breña.<br>
+            2️⃣ Si es de <strong>PROVINCIA/EXTRANJERO</strong> ➡️ Pasar directo a Modalidad Virtual.
+        </div>
+    </div>
+
+    <div id="paso1" class="content-section">
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">1A. Saludo Inicial (Sin ubicación) <span class="var-badge">Versión 1/3</span></span>
+            <div class="text-preview">
+<div class="var active">¡Hola! 😊🌿 Gracias por escribirnos. Somos un centro de nutrición con más de 13 años de experiencia, liderado por la Dra. Estrella Chacón (CNP 6921). 
+
+Para poder darte la información correcta y ver si te derivamos a consulta presencial o videollamada, cuéntame:
+👉 ¿Cuál es tu nombre?
+👉 ¿De qué ciudad o distrito nos escribes? 📍
+👉 ¿Cuántos kilos te gustaría bajar?</div>
+<div class="var">¡Qué tal! 👋 Bienvenido/a a nuestro centro especializado en nutrición de la Dra. Estrella Chacón. 
+
+Para brindarte el plan y la atención adecuada (ya sea presencial u online), ayúdanos con estos datos rápidos:
+👉 ¿Cómo te llamas?
+👉 ¿Desde qué ciudad o distrito nos contactas? 📍
+👉 ¿Cuál es tu meta de kilos a bajar?</div>
+<div class="var">¡Hola, un gusto saludarte! ✨ Somos el equipo clínico de la Dra. Estrella Chacón (CNP 6921). 
+
+Queremos guiarte de la mejor manera hacia tu meta. Para saber si te agendamos en consultorio o videollamada, coméntame:
+👉 ¿Cuál es tu nombre completo?
+👉 ¿En qué distrito o ciudad te encuentras actualmente? 📍
+👉 ¿Cuántos kilos buscas reducir?</div>
+            </div>
+            <div class="hidden-keywords">bienvenida saludo general provincia donde primera vez</div>
+        </div>
+        
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">1B. Saludo (Si YA SABES que es de Lima) <span class="var-badge">Versión 1/3</span></span>
+            <div class="text-preview">
+<div class="var active">¡Hola! 😊🌿 Gracias por escribirnos. Qué bueno que estés en Lima. 
+
+Para recomendarte la sede y el especialista ideal para ti, cuéntame:
+👉 ¿Cuál es tu nombre y edad?
+👉 Para tu cita presencial, ¿te queda más cerca nuestra sede de San Isidro o la de Breña? 📍
+👉 ¿Cuántos kilos te gustaría bajar?</div>
+<div class="var">¡Qué tal! 👋 Nos alegra mucho que nos escribas. Al estar en Lima podemos recibirte en nuestros consultorios. 
+
+Para darte la información exacta, por favor indícame:
+👉 ¿Cómo te llamas y qué edad tienes?
+👉 ¿Preferirías atenderte en nuestra sede de Breña o en San Isidro? 📍
+👉 ¿Cuál es tu meta de peso a reducir?</div>
+<div class="var">¡Hola! ✨ Bienvenida/o a nuestro centro. Excelente que te encuentres en Lima. 
+
+Para poder derivarte correctamente, ayúdame con esto:
+👉 ¿Cuál es tu nombre y tu edad actual?
+👉 Contamos con sedes en Breña y San Isidro, ¿cuál te queda más céntrica? 📍
+👉 ¿Cuántos kilos te gustaría bajar con nosotros?</div>
+            </div>
+            <div class="hidden-keywords">bienvenida saludo lima sedes conoce</div>
+        </div>
+
+        <div class="copy-card" style="border-left-color: #455a64;" onclick="copyCard(this)">
+            <span class="card-title">Filtro Anti-Niños (Cuenta activa) <span class="var-badge">Versión 1/2</span></span>
+            <div class="text-preview">
+<div class="var active">¡Hola! 😊 Notamos que la cuenta está activa. Para continuar con la asesoría para mamá o papá, ¿podrías confirmarnos si estamos hablando con el titular interesado en el plan? Queremos asegurarnos de dar la información médica correcta. 👩‍⚕️</div>
+<div class="var">¡Qué tal! 👋 Vemos actividad en esta cuenta de WhatsApp. Por protocolos de atención clínica, necesitamos validar que estamos conversando directamente con el titular mayor de edad (papá o mamá) interesado en el tratamiento. ¿Nos confirmas por favor? ✨</div>
+            </div>
+            <div class="hidden-keywords">niños edad menor mama titular joven cuenta activa adolescente</div>
+        </div>
+    </div>
+
+    <div id="paso2" class="content-section" style="display:none;">
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">2. Mostrar Sedes y Horarios (Lima) <span class="var-badge">Versión 1/3</span></span>
+            <div class="text-preview">
+<div class="var active">Un gusto saludarte, [Nombre] ✨😉 excelente, también estamos en Lima. Te comparto nuestras sedes y horarios 👇🏽
+📍 Breña - Av. Venezuela 625 (Lun- Sáb 8:00 am - 7:30 pm)
+📍 San Isidro - Av. Paseo de la República 3691 (Lun -Sáb 9:00 am-6:30 pm)</div>
+<div class="var">¡Hola [Nombre]! 👋 Qué excelente noticia que te encuentres en Lima. Te dejo las direcciones y horarios de nuestros dos consultorios 👇🏽
+📍 Sede Breña: Av. Venezuela 625 (Lun a Sáb 8:00 am a 7:30 pm)
+📍 Sede San Isidro: Av. Paseo de la República 3691 (Lun a Sáb 9:00 am a 6:30 pm)</div>
+<div class="var">¡Perfecto [Nombre]! 🌿 Ya que estás en Lima, tienes la opción de visitarnos de manera presencial. Aquí tienes nuestras sedes disponibles 👇🏽
+📍 Breña (Av. Venezuela 625) - Lun a Sáb de 8:00 am a 7:30 pm
+📍 San Isidro (Av. Paseo de la República 3691) - Lun a Sáb de 9:00 am a 6:30 pm</div>
+            </div>
+            <div class="hidden-keywords">sedes horarios direcciones lima breña san isidro ubicacion donde estan</div>
+        </div>
+
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <div class="img-alert">📸 ADJUNTA FOTO: "TU PLAN DE CAMBIO" (Tabla de los 3 planes)</div>
+            <span class="card-title">2. Pitch Consulta S/20 y Elección <span class="var-badge">Versión 1/2</span></span>
+            <div class="text-preview">
+<div class="var active">¡Perfecto! 😊
+👉 Primero empezamos con una consulta (s/20) donde vemos tu caso a detalle (cómo comes, horarios, rutina, etc.).
+💚 Trabajamos con programas personalizados de 4, 8 y 12 semanas.
+👉 Incluyen plan de alimentación, consultas y seguimiento para ayudarte con la ansiedad y mantener el orden.
+👉 La nutricionista te recomendará el plan más adecuado (básico, full o premium) según lo que necesites.
+💰 Los programas van desde S/277, según el nivel de acompañamiento.
+👉 Por eso primero realizamos la evaluación en la primera consulta.
+
+¿En cuál de nuestras dos sedes te gustaría atenderte, Breña o San Isidro?</div>
+<div class="var">¡Genial! 🌟 Te cuento cómo es nuestro proceso:
+👉 Todo inicia con una consulta de evaluación (s/20) para conocer tus hábitos, horarios y metabolismo a fondo.
+💚 Tras evaluarte, te sugeriremos programas de 4, 8 o 12 semanas (básico, full o premium).
+👉 Nuestros programas incluyen tu plan nutricional, controles y técnicas para manejar la ansiedad. 
+💰 Los tratamientos completos inician en S/277, por ello es clave evaluarte primero en la cita de S/20.
+
+Para tu evaluación inicial, ¿prefieres que te agendemos en San Isidro o en Breña?</div>
+            </div>
+            <div class="hidden-keywords">explicacion 20 soles como funciona proceso paso a paso eleccion sede elegir evaluacion</div>
+        </div>
+
+        <div class="copy-card card-br" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--brena);">2. Confirmar Breña y Pedir Día <span class="var-badge">Versión 1/2</span></span>
+            <div class="text-preview">
+<div class="var active">Genial, 📍 Breña - Av. Venezuela 625 (Lun- Sáb 8:00 am - 7:30 pm)
+¿Qué día tienes disponible y en qué horario prefieres atenderte: mañana o tarde? 😉💚</div>
+<div class="var">¡Perfecto! 📍 Agendaremos tu cita en nuestra sede Breña (Av. Venezuela 625). Atendemos de Lunes a Sábado.
+Cuéntame, ¿qué día de esta semana te viene mejor y si prefieres horario de mañana o de tarde? ✨</div>
+            </div>
+            <div class="hidden-keywords">agendar breña pedir dia horario cuando disponibilidad</div>
+        </div>
+
+        <div class="copy-card card-si" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--info);">San Isidro (S/ 20) - Equipo Especialistas <span class="var-badge">Versión 1/2</span></span>
+            <div class="text-preview">
+<div class="var active">¡Genial! ✨ En nuestra sede de San Isidro contamos con atención diagnóstica presencial con nuestro equipo de especialistas. Esta consulta tiene un costo de S/ 20. 
+
+Evaluaremos tus medidas, peso y hábitos para iniciar tu programa personalizado. 🥗✨
+
+📍 Av. Paseo de la República 3691.
+¿Qué día se te acomoda mejor visitarnos?</div>
+<div class="var">¡Excelente elección! 💚 En San Isidro, tu evaluación inicial con nuestras especialistas cuesta solo S/ 20. 
+
+En esta primera cita revisaremos tu composición corporal y metabolismo para diseñar tu ruta de éxito. 📉
+
+📍 Estamos en Av. Paseo de la República 3691.
+¿Para qué día te gustaría que busquemos un espacio en la agenda?</div>
+            </div>
+            <div class="hidden-keywords">san isidro 20 soles presencial lima barata equipo</div>
+        </div>
+
+        <div class="copy-card card-prov" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--provincia);">Modalidad Virtual / Provincia <span class="var-badge">Versión 1/2</span></span>
+            <div class="text-preview">
+<div class="var active">¡Comprendo! Al estar fuera de Lima, tu atención sería mediante nuestro exclusivo **Programa Virtual por Videollamada**. 💻🌎
+
+Atendemos a cientos de pacientes en todo el Perú y el extranjero con los mismos resultados que presencial. Tendrás tu evaluación, plan de alimentación y seguimiento directamente con nuestro equipo médico.
+
+Nuestros planes virtuales inician desde los S/ 277 por 4 semanas. ¿Te gustaría que te envíe el detalle de lo que incluye el plan online? ✨</div>
+<div class="var">¡Entendido! 🌎 Como te encuentras fuera, la mejor opción para ti es nuestro **Programa 100% Virtual**. 💻
+
+Trabajamos con el mismo nivel de exigencia y resultados que en formato presencial, guiándote por videollamada paso a paso. 
+
+La inversión de los planes online empieza en S/ 277 por 4 semanas. ¿Deseas que te comparta todo lo que incluye esta modalidad? 👇</div>
+            </div>
+            <div class="hidden-keywords">provincia virtual extranjero online videollamada lejos pais ciudad</div>
+        </div>
+    </div>
+
+    <div id="paso3" class="content-section" style="display:none;">
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">FAQ: ¿De qué consta la consulta? <span class="var-badge">Versión 1/2</span></span>
+            <div class="text-preview">
+<div class="var active">En este primer encuentro evaluamos:
+Peso, porcentaje de grasa, porcentaje de músculo, edad metabólica, perímetros y más,
+✅ Usamos tecnología de bioimpedancia corporal para conocer tu estado actual y diseñar un plan personalizado.</div>
+<div class="var">Durante tu evaluación de diagnóstico presencial medimos a profundidad:
+Tu índice de grasa, retención de líquidos, masa muscular y edad metabólica real. 📉
+✅ Nos apoyamos en una balanza de bioimpedancia avanzada para que tu plan de alimentación sea 100% exacto para tu cuerpo.</div>
+            </div>
+            <div class="hidden-keywords">que incluye costa consulta evaluacion bioimpedancia grasa musculo edad metabolica perimetros balanza peso</div>
+        </div>
+
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <div class="img-alert">📸 ADJUNTA FOTO: "TU CAMBIO EMPIEZA AQUÍ" (Tabla de 4, 8 y 12 semanas)</div>
+            <span class="card-title">Proyección de Kilos a Bajar <span class="var-badge">Versión 1/2</span></span>
+            <div class="text-preview">
+<div class="var active">¡Te cuento que nuestros pacientes logran resultados reales sin efecto rebote! 📉 Te comparto nuestra proyección de éxito referencial 👇
+
+✔️ 4 semanas: 3 a 5 kg
+✔️ 8 semanas: 6 a 8 kg
+✔️ 12 semanas: 10 a 18 kg
+
+Todo es con alimentación real y Lipolíticos reductores (incluidos en planes Full y Premium A). ¿Lista para empezar tu cambio? 💪</div>
+<div class="var">¡Nuestros pacientes ven cambios increíbles y sostenibles! 🌟 Para que tengas una idea, esta es la proyección referencial de pérdida de grasa:
+
+✔️ 4 semanas: 3 a 5 kg
+✔️ 8 semanas: 6 a 8 kg
+✔️ 12 semanas: 10 a 18 kg
+
+Lo logramos combinando nutrición inteligente y nuestros Lipolíticos reductores (en planes Full y Premium A). ¿Te animas a dar el primer paso? ✨</div>
+            </div>
+            <div class="hidden-keywords">proyeccion kilos bajar tiempo resultados cuanto bajo rebote foto proyeccion</div>
+        </div>
+        
+        <div class="copy-card card-general" onclick="copyCard(this)">
+            <span class="card-title">FAQ: Diferencia entre consulta 20 y 50 <span class="var-badge">Versión 1/2</span></span>
+            <div class="text-preview">
+<div class="var active">La diferencia es que en la opción de S/ 50 la consulta diagnóstica es una evaluación más especializada para casos a profundidad. En la opción de S/ 20, la atención es con nuestro equipo de especialistas aplicando los mismos protocolos efectivos. ¡Ambas opciones garantizan resultados! 👩‍⚕️✨</div>
+<div class="var">Es muy sencillo: La cita de S/ 50 es una evaluación de mayor profundidad diseñada para abordar casos clínicos complejos o estancamientos metabólicos. La evaluación de S/ 20 la realiza nuestro equipo de expertas nutricionistas siguiendo el mismo método de la doctora. ¡En ambas estarás en excelentes manos! 💚</div>
+            </div>
+            <div class="hidden-keywords">diferencia sedes costo doctora equipo porque 50 20 dudas</div>
+        </div>
+    </div>
+
+    <div id="paso4" class="content-section" style="display:none;">
+        <div class="copy-card card-price" onclick="copyCard(this)">
+            <div class="img-alert">📸 ADJUNTA FOTO: "TU PLAN DE CAMBIO" (Tabla comparativa de los 3 planes)</div>
+            <span class="card-title" style="color: var(--price);">Resumen General (Si el cliente está indeciso)</span>
+            <div class="text-preview">Aquí tienes un resumen de nuestros planes presenciales y lo que incluye cada uno en detalle. 👇 
+
+Todos inician con una cita de evaluación diagnóstica. ¿Cuál de estas opciones crees que se adapta mejor a tu meta de salud?</div>
+            <div class="hidden-keywords">resumen planes tabla comparativa opciones indeciso todos los precios foto</div>
+        </div>
+
+        <div class="copy-card card-price" onclick="copyCard(this)">
+            <div class="img-alert">📸 ADJUNTA FOTO: CUADRO VERDE "PLAN BÁSICO"</div>
+            <span class="card-title" style="color: var(--price);">Plan Básico (Presencial)</span>
+            <div class="text-preview">📌 *PLAN BÁSICO (Presencial)*
+Ideal para iniciar tu proceso con la mejor asesoría.
+
+*Incluye:* 📋🍏👂
+✅ Consulta nutricional semanal
+✅ Plan de alimentación personalizado
+✅ Auriculoterapia ansiolítica
+
+💰 *Inversión:*
+• 4 semanas: S/ 277 | 8 semanas: S/ 497 | 12 semanas: S/ 647</div>
+            <div class="hidden-keywords">plan basico precio costo presencial barato verde foto</div>
+        </div>
+
+        <div class="copy-card card-price" onclick="copyCard(this)">
+            <div class="img-alert" style="color: #c2185b; border-color: #f48fb1; background: #fce4ec;">📸 ADJUNTA FOTO: CUADRO FUCSIA "PLAN FULL"</div>
+            <span class="card-title" style="color: var(--price);">Plan Full (El más vendido)</span>
+            <div class="text-preview">📌 *PLAN FULL (Presencial)*
+Nuestro plan más popular para acelerar la pérdida de grasa.
+
+*Incluye:* 📋🍏👂💉
+✅ Consulta nutricional semanal
+✅ Plan de alimentación personalizado
+✅ Auriculoterapia ansiolítica
+✅ Lipolíticos reductores
+
+💰 *Inversión:*
+• 4 semanas: S/ 497 | 8 semanas: S/ 897 | 12 semanas: S/ 1257</div>
+            <div class="hidden-keywords">plan full precio costo presencial lipoliticos inyecciones medio grasa fucsia foto</div>
+        </div>
+    </div>
+
+    <div id="paso5" class="content-section" style="display:none;">
+        <div class="copy-card card-bank" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--bank);">Cierre y Pago de Consulta (S/20)</span>
+            <div class="text-preview">Perfecto [Nombre], por favor me confirmas la agenda con el pago de la consulta S/20
+📅 [Día de la semana] [Día/Mes] a las [Hora]
+📍 [Dirección de la sede elegida]
+
+926 935 548
+🟩 Yape: 👉 Gordito Ya No Más – Centro de Nutrición y Adelgazamiento Personalizado
+🟩 Plin: 👉 Estrella Chacón
+RUC: 20610035656
+
+Luego por favor envíame tu comprobante de pago y DNI para enviarte tu boleta electrónica, la confirmación de tu cita y los detalles de atención😊</div>
+            <div class="hidden-keywords">cierre pago 20 soles agenda yape plin comprobante dni boleta confirmar cita depositar deposita</div>
+        </div>
+
+        <div class="copy-card card-bank" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--bank);">Pagos BCP / Yape / Plin</span>
+            <div class="text-preview">✔️ *MÉTODOS DE PAGO GYNM:*
+☑ Efectivo o Tarjetas en consultorio (Aceptamos todas).
+
+📲 *YAPE / PLIN:* 926 935 548
+
+🏦 *BANCO DE CRÉDITO (BCP)*
+Cuenta corriente: 1919900398018
+CCI: 00219100990039801854
+A nombre de: Gordito ya no más Centro de nutricion y adelgazamiento
+RUC: 20610035656</div>
+            <div class="hidden-keywords">bcp yape plin cuentas transferencias pagos ruc deposito principal</div>
+        </div>
+    </div>
+
+    <div id="seguimiento" class="content-section" style="display:none;">
+        <div class="copy-card card-price" style="border-left-color: #c2185b;" onclick="copyCard(this)">
+            <div class="img-alert promo-alert">🎁 SEGUIMIENTO PROMO</div>
+            <span class="card-title" style="color: #c2185b;">Mensaje 1: Recordatorio Rápido</span>
+            <div class="text-preview">¡Hola, [Nombre]! 👋 Paso por aquí para recordarte que la promoción por el Día del Trabajador es solo por esta semana. 
+
+ No quiero que te pierdas ese 10% de descuento en nuestros Planes Full para empezar mayo con toda la energía. ⚡ 
+¿Te gustaría asegurar tu cupo hoy mismo? 🚨
+
+Si prefieres avanzar de una vez, puedes elegir:
+
+1.- Deseo agendar una cita 📅
+2.- No deseo recibir más información, muchas gracias ✋</div>
+            <div class="hidden-keywords">seguimiento recordatorio mensaje 1 promo dia del trabajador descuento mayo opciones menu interactivo</div>
+        </div>
+
+        <div class="copy-card card-price" style="border-left-color: #c2185b;" onclick="copyCard(this)">
+            <div class="img-alert promo-alert">🎁 SEGUIMIENTO PROMO</div>
+            <span class="card-title" style="color: #c2185b;">Mensaje 2: Inversión en Salud</span>
+            <div class="text-preview">Hola [Nombre], sé que el día a día puede ser agotador 😰, pero ¿qué mejor forma de premiar tu esfuerzo que invirtiendo en tu propia salud? 
+Recuerda que tienes disponible un *10% de descuento*. en todos nuestros Planes Full. 🏆 
+¿Damos el primer paso para que este 1º de mayo sea el inicio de tu cambio real? 💪
+
+Si prefieres avanzar de una vez, puedes elegir:
+
+1.- Deseo agendar una cita 📅
+2.- No deseo recibir más información, muchas gracias ✋</div>
+            <div class="hidden-keywords">seguimiento mensaje 2 inversion salud agotador descuento opciones menu interactivo</div>
+        </div>
+        
+        <div class="copy-card card-price" style="border-left-color: #c2185b;" onclick="copyCard(this)">
+            <div class="img-alert promo-alert">🎁 SEGUIMIENTO PROMO</div>
+            <span class="card-title" style="color: #c2185b;">Mensaje 3: Motivación de Energía</span>
+            <div class="text-preview">¡Hola [Nombre]! 👋 ¿Te imaginas llegar al próximo mes sintiéndote con más energía y ligereza? 🏃‍♂️ Tu cuerpo es tu mejor herramienta y merece lo emjor. 
+Aprovecha hoy el 10% de descuento en nuestros Planes Full y logra tu meta de una vez por todas.  
+¡Escríbeme para activar tu promoción! ✅✨
+
+Si prefieres avanzar de una vez, puedes elegir:
+
+1.- Deseo agendar una cita 📅
+2.- No deseo recibir más información, muchas gracias ✋</div>
+            <div class="hidden-keywords">seguimiento mensaje 3 energia ligereza motivacion descuento opciones menu interactivo</div>
+        </div>
+
+        <div class="copy-card card-price" style="border-left-color: #c2185b;" onclick="copyCard(this)">
+            <div class="img-alert promo-alert">🎁 SEGUIMIENTO PROMO</div>
+            <span class="card-title" style="color: #c2185b;">Mensaje 4: Sentido de Urgencia</span>
+            <div class="text-preview">Hola [Nombre] 👋 El 1º de mayo está a la vuelta de la esquina. 
+¿Cómo quieres celebrarlo? ¿Con el cansancio de siempre o con la decisión de un cambio real? 🌟 Aprovecha el 10% de descuento especial en nuestros planes full y el bienestar que mereces. 🙌 ¿Qué día deseas agendar tu cita?
+
+Si prefieres avanzar de una vez, puedes elegir:
+
+1.- Deseo agendar una cita 📅
+2.- No deseo recibir más información, muchas gracias ✋</div>
+            <div class="hidden-keywords">seguimiento mensaje 4 vuelta de la esquina celebrar cansancio urgencia opciones menu interactivo</div>
+        </div>
+    </div>
+
+    <div id="crisis" class="content-section" style="display:none;">
+        <div class="copy-card card-crisis" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--accent);">Objeción: No tiene tiempo / Vive lejos</span>
+            <div class="text-preview">¡Te entiendo perfectamente! El ritmo de hoy es intenso. 🏃‍♂️💨 
+
+Por eso tenemos una modalidad **100% Online**. Recibes tu plan, asesoría y seguimiento por videollamada o WhatsApp sin salir de tu oficina o casa. 
+
+¿Te gustaría que te explique cómo funciona el Plan Online?</div>
+            <div class="hidden-keywords">tiempo lejos ocupado trabajo distancia dificil virtual online viaje trafico</div>
+        </div>
+        <div class="copy-card card-crisis" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--accent);">Objeción: Pide Domingo o Agenda Llena</span>
+            <div class="text-preview">¡Hola! 😊 Te comento que los domingos nuestro equipo descansa para recargar energías. 🔋
+
+Sin embargo, puedo agendarte de forma prioritaria para este **Lunes a primera hora**. ¿Te parece bien a las 9:00 am o prefieres en la tarde?</div>
+            <div class="hidden-keywords">domingo feriado agenda llena descanso no hay campo cita horario cerrado lunes fin de semana</div>
+        </div>
+    </div>
+
+    <div id="medico" class="content-section" style="display:none;">
+        <div class="img-alert" style="color: #6a1b9a; border-color: #ab47bc; background: #f3e5f5;">🛡️ ESCUDO: Úsalo para NO dar info médica errónea</div>
+        <div class="copy-card card-med" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--medical);">Derivación Médica (Preguntas Complejas)</span>
+            <div class="text-preview">Esa es una pregunta muy importante y muy específica de salud. 👩‍⚕️✨
+
+Como no soy el especialista médico, prefiero que esa duda la resuelvas directamente con nuestra Nutricionista en la **Consulta Diagnóstica**. Ella revisará tu historial clínico y te dará la respuesta exacta según tu caso. 
+
+¿Agendamos tu cita para que puedas consultarle?</div>
+            <div class="hidden-keywords">pastillas medicina doctor nutricionista dudas clinica derivar no se especial complejo</div>
+        </div>
+        <div class="copy-card card-med" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--medical);">Casos: SOP, Tiroides, Diabetes</span>
+            <div class="text-preview">¡Sí, por supuesto! 👩‍⚕️ Muchas de nuestras pacientes tienen SOP, hipotiroidismo o resistencia a la insulina. Al ser un centro médico, tu plan se diseña considerando tu diagnóstico para regular tus hormonas y bajar de peso de forma segura. 🌱</div>
+            <div class="hidden-keywords">sop tiroides diabetes ovario poliquistico hipotiroidismo insulina hormonas enfermedad</div>
+        </div>
+        <div class="copy-card card-med" onclick="copyCard(this)">
+            <span class="card-title" style="color: var(--medical);">Atención a Hombres</span>
+            <div class="text-preview">¡Claro que sí! 💪 Atendemos a muchos caballeros que buscan reducir grasa abdominal o mejorar su rendimiento muscular. El tratamiento se adapta 100% a la fisionomía y gasto calórico masculino. 🏋️‍♂️</div>
+            <div class="hidden-keywords">hombres varones caballeros chicos chico musculatura masculino esposo enamorado novio</div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    function showSection(id, btn) {
+        // Ocultar todas las secciones
+        document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
+        // Mostrar solo la sección seleccionada
+        const target = document.getElementById(id);
+        if(target) target.style.display = 'block';
+        
+        // Manejar el estado visual del menú lateral
+        document.querySelectorAll('.nav-step').forEach(n => n.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Resetear el buscador
+        document.getElementById('search').value = '';
+        const cards = document.querySelectorAll('.copy-card, .info-card');
+        cards.forEach(c => c.style.display = 'block');
+    }
+
+    function copyCard(element) {
+        let textContainer = element.querySelector('.text-preview');
+        let textToCopy = "";
+
+        // Buscar si esta tarjeta tiene el sistema de rotación activo (clase .var)
+        let variations = textContainer.querySelectorAll('.var');
+        
+        if (variations.length > 0) {
+            // Encuentra la variación activa actualmente
+            let activeVar = Array.from(variations).find(v => v.classList.contains('active'));
+            if (!activeVar) activeVar = variations[0]; // Backup de seguridad
+            
+            textToCopy = activeVar.innerText;
+
+            // Lógica de rotación para preparar la siguiente versión
+            let currentIndex = Array.from(variations).indexOf(activeVar);
+            let nextIndex = (currentIndex + 1) % variations.length;
+
+            activeVar.classList.remove('active');
+            variations[nextIndex].classList.add('active');
+
+            // Actualizar la etiqueta visual del título (Versión X/Y)
+            let badge = element.querySelector('.var-badge');
+            if (badge) {
+                badge.innerText = `Versión ${nextIndex + 1}/${variations.length}`;
+            }
+        } else {
+            // Si es una tarjeta normal sin rotación, simplemente copia el texto
+            textToCopy = textContainer.innerText;
+        }
+
+        // Ejecutar copiado al portapapeles
+        navigator.clipboard.writeText(textToCopy);
+        
+        // Efecto visual de clic
+        element.style.transform = 'scale(0.98)';
+        setTimeout(() => element.style.transform = 'none', 100);
+        showToast("Texto copiado, listo para pegar ✅");
+    }
+
+    function copySimple(text) {
+        navigator.clipboard.writeText(text);
+        showToast("Dato copiado: " + text);
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 2000);
+    }
+
+    function filter() {
+        const val = document.getElementById('search').value.toLowerCase();
+        const cards = document.querySelectorAll('.copy-card');
+        
+        cards.forEach(c => {
+            const visibleText = c.innerText.toLowerCase();
+            const hiddenText = c.querySelector('.hidden-keywords') ? c.querySelector('.hidden-keywords').innerText.toLowerCase() : '';
+            const match = visibleText.includes(val) || hiddenText.includes(val);
+            c.style.display = match ? 'block' : 'none';
+            if(match && val.length > 2) c.parentElement.style.display = 'block';
+        });
+    }
+</script>
+
+</body>
+</html>
